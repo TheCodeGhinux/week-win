@@ -89,7 +89,7 @@ func (is *IntegrationService) GetIntegrationsJSON(c *gin.Context) IntegrationRes
 			AppDescription:  "This is a weekly wins bot for teams",
 			AppLogo:         "https://i.postimg.cc/L5bv01Px/gr-stocks-Iq9-Sa-Jezk-OE-unsplash.jpg",
 			AppName:         "Week-win Bot",
-			AppURL:          "https://6vxj0rsr-8080.uks1.devtunnels.ms",
+			AppURL:          baseUrl,
 			BackgroundColor: "#00a400",
 		},
 		IntegrationCategory: "Communication & Collaboration",
