@@ -23,7 +23,7 @@ func (is *IntegrationService) GetIntegrationsJSON(c *gin.Context) map[string]int
 
 	baseUrl := GetBaseURL(c)
 
-	log.Println(baseUrl)
+	log.Println("Base Url in integration: ", baseUrl)
 	targetURL := fmt.Sprintf("%s/api/v1/tick", baseUrl)
 
 	return map[string]interface{}{
@@ -32,13 +32,13 @@ func (is *IntegrationService) GetIntegrationsJSON(c *gin.Context) map[string]int
 			"updated_at": "2025-02-21",
 		},
 		"descriptions": map[string]string{
-			"app_description":  "A brief description of the application functionality.",
-			"app_logo":         "https://asubeb.anambrastate.gov.ng/?c=107938849870",
+			"app_description":  "This is a weekly wins bot for teams",
+			"app_logo":         "https://i.postimg.cc/L5bv01Px/gr-stocks-Iq9-Sa-Jezk-OE-unsplash.jpg",
 			"app_name":         "Week-win Bot",
-			"app_url":          "https://6vxj0rsr-8000.uks1.devtunnels.ms/api/v1/integration-spec",
+			"app_url":          "https://week-win.onrender.com/api/v1/integration-spec",
 			"background_color": "#00a400",
 		},
-		"integration_category": "Social Media Management",
+		"integration_category": "Communication & Collaboration",
 		"integration_type":     "interval",
 		"is_active":            true,
 		"output": []map[string]interface{}{
@@ -56,15 +56,22 @@ func (is *IntegrationService) GetIntegrationsJSON(c *gin.Context) map[string]int
 		"permissions": map[string]interface{}{
 			"monitoring_user": map[string]interface{}{
 				"always_online": true,
-				"display_name":  "Performance Monitor",
+				"display_name":  "Weekly wins Bot",
 			},
 		},
 		"settings": []map[string]interface{}{
 			{
 				"label":    "Delivery Time",
-				"type":     "text",
+				"type":     "dropdown",
 				"required": true,
 				"default":  "2 * * * *",
+				"options": []string{
+					"0 9 * * 1",
+					"15 9 * * 1",
+					"25 9 * * 1",
+					"2 * * * *",
+					"5 * * * *",
+				},
 			},
 			{
 				"label":    "Source",
