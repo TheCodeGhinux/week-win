@@ -12,7 +12,7 @@ func Integration(router *gin.Engine, ApiVersion string) *gin.Engine {
 
 	IntegrationGroup := router.Group(fmt.Sprintf("%v", ApiVersion))
 	{
-		IntegrationGroup.GET("/integration-spec", IntegrationController.GetIntegrationJSON)
+		IntegrationGroup.GET("/integration.json", IntegrationController.GetIntegrationJSON)
 	}
 
 	return router

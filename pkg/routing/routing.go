@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/TheCodeGhinux/week-win/pkg/routers"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,6 +14,15 @@ func Route() {
 
 	// configs := config.LoadConfig()
 	r := gin.Default()
+
+	// CORS Middleware
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"}, // Change this to specific origins if needed
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
