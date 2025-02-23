@@ -3,6 +3,7 @@ package routing
 import (
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/TheCodeGhinux/week-win/pkg/routers"
 	"github.com/gin-gonic/gin"
@@ -12,6 +13,17 @@ func Route() {
 
 	// configs := config.LoadConfig()
 	r := gin.Default()
+
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Weekly win telex integration",
+		})
+	})
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "pong",
+		})
+	})
 	// Swagger docs route
 	routeRegister(r)
 
