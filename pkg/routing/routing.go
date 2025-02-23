@@ -27,7 +27,7 @@ func Route() {
 	// Swagger docs route
 	routeRegister(r)
 
-	err := r.Run(fmt.Sprintf("%s:%s", "localhost", "8080"))
+	err := r.Run(fmt.Sprintf("%s:%s", "0.0.0.0", "8080"))
 
 	// **Logging registered routes**
 	for _, route := range r.Routes() {
