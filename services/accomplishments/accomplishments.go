@@ -123,8 +123,8 @@ func (s *AccomplishmentsService) postToTelexChannel(message, channel_id, gif str
 // Weekly scheduled function
 func (s *AccomplishmentsService) GetWeeklyAccomplishments(channel_id string, settings any) (map[string]interface{}, error) {
 
-	log.Println("Channel ID: ", channel_id)
-	log.Println("Settings: ", settings)
+	// log.Println("Channel ID: ", channel_id)
+	// log.Println("Settings: ", settings)
 	accomplishments := s.collectAccomplishments()
 	if len(accomplishments) == 0 {
 		return nil, errors.New("No accomplishments to report this week")
@@ -142,7 +142,7 @@ func (s *AccomplishmentsService) GetWeeklyAccomplishments(channel_id string, set
 	}
 
 	// Log the result
-	log.Println("Weekly Accomplishments:", result)
+	// log.Println("Weekly Accomplishments:", result)
 
 	return result, nil
 

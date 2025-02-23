@@ -2,9 +2,9 @@ package controllers
 
 import (
 	"log"
-	"net/http"
 
 	services "github.com/TheCodeGhinux/week-win/services/accomplishments"
+	IS "github.com/TheCodeGhinux/week-win/services/integrations"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,38 +13,38 @@ type AccomplishmentHandler struct {
 }
 
 func (ac *AccomplishmentHandler) GetWeeklyAccomplishments(c *gin.Context) {
+	var payload IS.MonitorPayload
 
-	var body struct {
-		ReturnURL string `json:"return_url"`
-		ChannelID string `json:"channel_id"`
-		Settings  any    `json:"settings"` // Change `any` to the correct type if known
+	// Try to bind JSON, log error if it fails
+	if err := c.ShouldBindJSON(&payload); err != nil {
+		log.Println("⚠️ Error binding JSON payload:", err)
+		log.Println("⚠️ Proceeding without a valid payload...")
 	}
 
-	if err := c.ShouldBindJSON(&body); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"success": false,
-			"message": "Invalid request body",
-			"error":   err.Error(),
-		})
-		return
+	// Extract fields from payload
+	channelID := payload.ChannelID
+	returnURL := payload.ReturnURL
+	settings := payload.Settings
+
+	// Log missing required fields instead of returning errors
+	if channelID == "" {
+		log.Println("⚠️ Missing ChannelID in payload")
+	}
+	if returnURL == "" {
+		log.Println("⚠️ Missing ReturnURL in payload")
+	}
+	if settings == nil {
+		log.Println("⚠️ Missing Settings in payload")
 	}
 
-	// Check if both return_url and channel_id are missing
-	if body.ReturnURL == "" && body.ChannelID == "" {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"success": false,
-			"message": "No return URL or channel ID provided",
-		})
-		return
-	}
+	log.Printf("📥 Received Payload - ChannelID: %s, ReturnURL: %s, Settings: %+v\n", channelID, returnURL, settings)
 
-	result, err := ac.Service.GetWeeklyAccomplishments(body.ChannelID, body.Settings)
-
+	// Call the service method with extracted data
+	result, err := ac.Service.GetWeeklyAccomplishments(channelID, settings)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
+		log.Println("❌ Error processing weekly accomplishments:", err)
+		return // No JSON response, just logs
 	}
 
-	log.Println("Response:", result)
-	c.JSON(http.StatusOK, result)
+	log.Println("✅ Successfully processed:", result)
 }
